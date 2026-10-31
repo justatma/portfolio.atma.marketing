@@ -1,0 +1,12 @@
+# Apache config for portfolio.atma.marketing (GoDaddy cPanel)
+DirectoryIndex index.html
+
+# ---- Force HTTPS and the bare hostname (website_ops audit 2026-10-31) ----
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Keep AutoSSL certificate validation reachable over http
+  RewriteRule ^\.well-known/acme-challenge/ - [L]
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^portfolio\.atma\.marketing$ [NC]
+  RewriteRule ^ https://portfolio.atma.marketing%{REQUEST_URI} [L,R=301]
+</IfModule>
