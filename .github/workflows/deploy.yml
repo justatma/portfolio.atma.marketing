@@ -47,6 +47,42 @@ jobs:
           print("Crawlability gate: every indexable page has readable HTML.")
           PY
 
+      # Refuse to ship the old team. On 2026-11-11 Journey Snowden and Vedant Tiwari
+      # merged into Journey, AI Principal Developer/Engineer: fourteen AI specialists
+      # plus Atma. A re-export from the design tool can bring the old copy back.
+      # Fix the page (or the design) and push again. Decision: website_ops/DECISIONS.md
+      - name: Team roster gate
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          skip = {"node_modules", "documents", "Documentation", "build", "archived_pages"}
+          old = [
+              r"vedant", r"tiwari", r"frontend engineer", r"backend engineer",
+              r"if the browser can dream it",
+              r"fifteen personas", r"fifteen agency roles", r"fifteen role types",
+              r"fifteen ai specialists", r"fifteen specialist ai", r"fifteen ai colleagues",
+              r"fifteen specialized experts", r"the fifteen specialists can do",
+              r"meet the fifteen", r"the fifteen, and the engines",
+              r"\b12-person team", r"hire 12 marketing specialists",
+          ]
+          pat = re.compile("|".join(old), re.I)
+          bad = []
+          for p in sorted(pathlib.Path(".").rglob("*")):
+              if p.suffix not in {".html", ".md"} or p.name == "README.md":
+                  continue
+              if skip & set(p.parts) or any(part.startswith(".") for part in p.parts):
+                  continue
+              s = p.read_text(errors="ignore")
+              for m in sorted({m.group(0).lower() for m in pat.finditer(s)}):
+                  bad.append(f"  {p}: \"{m}\"")
+          if bad:
+              print("These pages still describe the old team (fifteen AI, Vedant, frontend/backend split):")
+              print("\n".join(bad))
+              print("The team is fourteen AI specialists plus Atma. See website_ops/DECISIONS.md, 2026-11-11.")
+              sys.exit(1)
+          print("Team roster gate: no old-team copy found.")
+          PY
+
       - name: Deploy via FTPS
         id: deploy
         continue-on-error: true
