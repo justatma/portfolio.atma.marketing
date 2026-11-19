@@ -1,0 +1,39 @@
+/* Unified footer, shared structure. Skin values live in each site's snippet as --af-* custom properties. */
+.af{background:var(--af-bg);color:var(--af-ink);border-top:1px solid var(--af-rule);-webkit-font-smoothing:antialiased}
+.af *,.af *::before,.af *::after{box-sizing:border-box}
+.af-wrap{max-width:1280px;margin:0 auto;padding:72px 112px 48px}
+.af a{color:var(--af-ink);text-decoration:none}
+.af a:hover{color:var(--af-hover);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.af a:focus-visible{outline:2px solid var(--af-hover);outline-offset:4px}
+.af-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr .8fr;grid-template-rows:auto 1fr;grid-template-areas:"quote work writing exp" "cta work writing exp";column-gap:48px;row-gap:40px}
+.af-quote{grid-area:quote;margin:0;padding-top:15px}
+.af-quote blockquote{margin:0;font:var(--af-quote)}
+.af-quote figcaption{margin-top:6px;font:var(--af-small);color:var(--af-muted)}
+.af-col{display:flex;flex-direction:column;gap:14px}
+.af-col.work{grid-area:work}.af-col.writing{grid-area:writing}.af-col.exp{grid-area:exp}
+.af-head{margin:0 0 4px;padding-top:12px;width:32px;white-space:nowrap;border-top:3px solid var(--af-bar);font:var(--af-head);text-transform:var(--af-head-case);letter-spacing:var(--af-head-track);color:var(--af-head-color)}
+.af-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.af-col li{font:var(--af-link)}
+.af-note{white-space:nowrap;font:var(--af-note);color:var(--af-note-color)}
+.af-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--af-hi);margin:0 6px 2px 2px;vertical-align:middle}
+.af .af-cta{grid-area:cta;align-self:end;justify-self:start;display:inline-flex;align-items:center;gap:10px;font:var(--af-cta);text-decoration:none}
+.af .af-cta:hover{text-decoration:none}
+.af-cta-text{text-decoration:underline;text-decoration-color:var(--af-hi);text-decoration-thickness:5px;text-underline-offset:5px;text-decoration-skip-ink:none}
+.af-cta svg{flex:none;width:36px;height:36px}
+.af-base{display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;margin-top:64px;font:var(--af-small);color:var(--af-muted)}
+.af-base p{margin:0}
+.af .af-base a{color:var(--af-mail)}
+@media (max-width:1100px){
+ .af-wrap{padding:64px 48px 40px}
+ .af-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto;grid-template-areas:"quote quote quote" "work writing exp" "cta cta cta";row-gap:48px}
+ .af-quote{padding-top:0}
+}
+@media (max-width:700px){
+ .af-wrap{padding:56px 24px 40px}
+ .af-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"quote" "work" "writing" "exp" "cta";row-gap:40px}
+ .af-col li{padding:4px 0}
+ .af .af-cta{padding:10px 0}
+ .af-base{flex-direction:column;gap:6px;margin-top:40px}
+ .af-copy{display:block;margin-top:6px}
+ .af-sep{display:none}
+}
